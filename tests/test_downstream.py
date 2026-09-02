@@ -57,6 +57,32 @@ def test_one_hop_accounts_are_at_depth_one():
         assert g.nodes[d].depth == 1, f"{d} should be one hop, is {g.nodes[d].depth}"
 
 
+def test_the_carrier_conditionally_reaches_app_protected_accounts():
+    """Wren's finding: the SIM edge does not stop at PHONE.
+
+    Authy restores a whole TOTP vault over SMS to the number on the account, so
+    "this service offers an authenticator app" can be true and irrelevant. The
+    path must exist, must be CONDITIONAL, and must be drawn as needing an
+    assumption - leaving it out silently tells somebody their app-protected
+    accounts survive a SIM swap, and for an Authy user that is false.
+    """
+    _, _, g = _run(synth.PLANTED)
+    n = g.nodes["youinvest.co.uk"]
+    assert n.klass == policy.APP, "fixture drifted; this should be a TOTP service"
+    assert n.reachable, "an APP account behind a reachable carrier was called safe"
+    assert n.only_conditional, "this path must be conditional, not asserted"
+    assert n.path[-1].kind == chain.AUTHBACKUP
+    assert n.path[-1].src == "vodafone.com.au"
+    assert not n.path[-1].certain
+
+
+def test_the_conditional_path_is_visibly_conditional_on_the_page():
+    _, _, g = _run(synth.PLANTED)
+    out = page.render(g, chain.moves(g), {"messages": 1, "domains": 1})
+    assert "cond" in out, "conditional rows are not marked"
+    assert "needs the stated assumption" in out
+
+
 def test_a_hardware_account_is_not_reachable():
     _, _, g = _run(synth.PLANTED)
     assert not g.nodes["1password.com"].reachable, \
@@ -197,7 +223,14 @@ def test_the_carrier_outranks_the_bank_in_the_moves():
     assert ms, "no moves produced"
     assert ms[0].domain == "vodafone.com.au", \
         f"first move should be the carrier, was {ms[0].domain}"
-    assert set(ms[0].covers) == {"vodafone.com.au", "ally.com"}
+    # It covers itself, the SMS-protected bank, and - since Wren's finding - the
+    # TOTP account whose codes can restore over SMS. Adding that edge made the
+    # carrier MORE important, which is his argument in one number.
+    assert {"vodafone.com.au", "ally.com"} <= set(ms[0].covers)
+    assert "youinvest.co.uk" in ms[0].covers, \
+        "the conditional authbackup reach is not counted in the set-cover"
+    assert len(ms[0].covers) > max(len(m.covers) for m in ms[1:]), \
+        "the carrier must cover strictly more than any single leaf"
 
 
 def test_moves_never_claim_to_cover_something_still_reachable():

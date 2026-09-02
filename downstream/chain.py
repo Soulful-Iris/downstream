@@ -44,6 +44,7 @@ RESET = "reset"        # owning the inbox resets this outright
 SIM = "sim"            # owning the carrier defeats an SMS second factor
 MX = "mx"              # owning the registrar redirects the mail itself
 VAULT = "vault"        # conditional: if the codes live in this vault
+AUTHBACKUP = "authbackup"   # conditional: if the TOTP codes restore over SMS
 CERTAIN = {RESET, SIM, MX}
 
 
@@ -139,7 +140,30 @@ def build(accounts: dict, directory: policy.Directory, email_domain: str = "") -
                               f"it can repoint the MX records for {email_domain}, "
                               f"which is every address at that domain"))
 
-    # 4. Conditional: a password vault, IF the authenticator codes are in it.
+    # 4. Conditional: the carrier ALSO reaches app-protected accounts, IF the
+    #    authenticator restores over SMS. Wren's finding, and he is right that
+    #    leaving it out is not neutral:
+    #
+    #      "Authy restores your entire seed vault to a new device via SMS to the
+    #       number on the account. Google Authenticator has synced to a Google
+    #       account since 2023; Microsoft Authenticator backs up to a Microsoft
+    #       account. In every one of those cases 'the account offers TOTP' is
+    #       true and also irrelevant."
+    #
+    #    It is the same shape the whole tool is built around - your bank's strong
+    #    2FA is worth what the carrier is worth - and I stopped one hop short.
+    #    Conditional and dashed, like the vault edge, because whether somebody's
+    #    codes are actually synced is not visible in a mail header.
+    for c in carriers:
+        for n in nodes.values():
+            if n is c or n.klass != policy.APP:
+                continue
+            edges.append(Edge(c.domain, n.domain, AUTHBACKUP,
+                              "IF your authenticator app restores its codes over "
+                              "SMS - Authy does, by default - then holding the "
+                              "phone number holds the codes too"))
+
+    # 5. Conditional: a password vault, IF the authenticator codes are in it.
     for v in vaults:
         for n in nodes.values():
             if n is v or n.klass != policy.APP:

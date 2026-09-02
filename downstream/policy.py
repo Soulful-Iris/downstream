@@ -50,7 +50,6 @@ MONEY = {"banking", "finance", "investing", "cryptocurrencies", "payments", "ret
 
 # Categories whose accounts are themselves KEYS to other accounts.
 REGISTRAR = {"domains"}
-MAILHOST = {"email"}
 IDENTITY = {"identity"}          # password managers / SSO live here
 
 # The directory has no `telecom` keyword. The PRD assumed one and was wrong.
@@ -109,10 +108,6 @@ class Service:
     @property
     def is_registrar(self) -> bool:
         return bool(self.keywords & REGISTRAR)
-
-    @property
-    def is_mailhost(self) -> bool:
-        return bool(self.keywords & MAILHOST)
 
     @property
     def is_identity(self) -> bool:

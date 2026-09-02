@@ -113,6 +113,33 @@ which found two real defects (a payslip matching nothing, and a colleague's
 the rules were adjusted *after* seeing those cases, so this is a corpus that has
 been fitted. It is not a claim about your mailbox.
 
+**The carrier also conditionally reaches app-protected accounts, and that is a
+newer, dashed edge.** Authy restores an entire TOTP vault over SMS to the number
+on the account; Google Authenticator syncs to a Google account. So "this service
+offers an authenticator app" can be true and irrelevant. Wren found this and he
+was right that leaving it out is not neutral - it would silently tell an Authy
+user their app-protected accounts survive a SIM swap. Whether your codes are
+actually synced is not visible in a mail header, so the path is conditional.
+
+**A consequence of that: the ordering APP-above-PHONE is a claim about what the
+service offers, not about you.** It stops being true the moment recovery is
+delegated somewhere with a weaker link.
+
+**Two gaps that are named and NOT closed.** Both from the same review:
+
+- *Registrar is not the same as DNS host.* The `mx` edge fires on a registrar
+  account, but plenty of self-hosted domains are registered at one company and
+  nameservered at another, and it is the nameserver holder who can repoint MX.
+  The directory has no "DNS host" keyword, the same way it has no "telecom" one.
+- *Federated login is not modelled at all, and it is probably the biggest thing
+  missing.* An OPEN Google account is a skeleton key to everything you have ever
+  used "Sign in with Google" for, and no hardware key on the downstream service
+  can stop it. It is not built because the signal the vault edge rides on does
+  not exist for SSO providers - Google, Apple and Microsoft carry keywords like
+  `retail`, `backup` and `cloud` in this dataset, never `identity` - so it would
+  need a second hardcoded list. That is a separate piece of work, not a cheap
+  sibling of what is here.
+
 **Unknown is scored as OPEN.** A service not in the directory is counted as the
 bad case. Absence of evidence does not downgrade a risk here, so expect the
 report to be pessimistic about anything obscure.
@@ -133,10 +160,10 @@ that matter:
   must come back with *nothing reachable*. A ranker that alarms everybody is not
   a ranker, and this is the case where the honest answer is "you are fine".
 
-All five load-bearing rules have been mutation-tested: scoring UNKNOWN as safe,
+All six load-bearing rules have been mutation-tested: scoring UNKNOWN as safe,
 treating an emailed code as real protection, removing the SIM edge, ranking the
-moves by severity instead of coverage, and writing subjects to disk each make a
-named test go red.
+moves by severity instead of coverage, and writing subjects to disk, and dropping
+the carrier-to-app edge each make a named test go red.
 
 ## Credits
 

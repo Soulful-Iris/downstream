@@ -85,7 +85,8 @@ def _hop_line(edge, nodes) -> str:
     src = nodes.get(edge.src)
     srcname = src.name if src else edge.src
     kind = {chain.RESET: "resets", chain.SIM: "sim swap",
-            chain.MX: "mx", chain.VAULT: "if in vault"}.get(edge.kind, edge.kind)
+            chain.MX: "mx", chain.VAULT: "if in vault",
+            chain.AUTHBACKUP: "if app syncs"}.get(edge.kind, edge.kind)
     return (f'<div class=hop><span class=k>{_e(kind)}</span>'
             f'<b>{_e(srcname)}</b> -&gt; <b>{_e(dstname)}</b><br>{_e(edge.why)}</div>')
 

@@ -29,6 +29,10 @@ PLANTED = [
                          ("Your payment confirmation", 4)]),
     ("gumroad.com",     [("Your receipt from Gumroad", 3)]),
     ("1password.com",   [("Verify your email address", 1)]),
+    # TOTP-protected and money-holding. Not reachable by any CERTAIN path - the
+    # only thing that touches it is Wren's conditional authbackup edge, which is
+    # why it is here: an edge that fires in no fixture is untested code.
+    ("youinvest.co.uk", [("Your statement is available", 3)]),
     ("aliexpress.com",  [("Your order confirmation", 2),
                          ("50% off flash sale ends tonight", 40)]),
     # --- not accounts: bulk mail that must not reach the page ---
@@ -87,7 +91,7 @@ def expected_accounts(spec=PLANTED) -> set:
     """
     if spec is PLANTED:
         return {"vodafone.com.au", "ally.com", "adp.com", "gumroad.com",
-                "1password.com", "aliexpress.com"}
+                "1password.com", "aliexpress.com", "youinvest.co.uk"}
     if spec is BORING:
         return {"1password.com", "adafruit.com", "afternic.com", "github.com"}
     if spec is HARD:
