@@ -60,11 +60,13 @@ def test_one_hop_accounts_are_at_depth_one():
 def test_the_carrier_conditionally_reaches_app_protected_accounts():
     """Wren's finding: the SIM edge does not stop at PHONE.
 
-    Authy restores a whole TOTP vault over SMS to the number on the account, so
+    Some authenticators register a new device against the phone number, so
     "this service offers an authenticator app" can be true and irrelevant. The
     path must exist, must be CONDITIONAL, and must be drawn as needing an
     assumption - leaving it out silently tells somebody their app-protected
-    accounts survive a SIM swap, and for an Authy user that is false.
+    accounts survive a SIM swap. NOTE: the wording on the page was corrected after
+    checking - Authy multi-device is off by default since 2022, and Google and
+    Microsoft authenticators restore from a cloud account, not a phone number.
     """
     _, _, g = _run(synth.PLANTED)
     n = g.nodes["youinvest.co.uk"]

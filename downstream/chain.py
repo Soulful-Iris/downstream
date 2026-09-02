@@ -141,27 +141,35 @@ def build(accounts: dict, directory: policy.Directory, email_domain: str = "") -
                               f"which is every address at that domain"))
 
     # 4. Conditional: the carrier ALSO reaches app-protected accounts, IF the
-    #    authenticator restores over SMS. Wren's finding, and he is right that
-    #    leaving it out is not neutral:
+    #    authenticator registers a new device by phone number. Wren's finding,
+    #    and the CLASS is right - leaving it out is an active claim that an
+    #    authenticator app survives a SIM swap.
     #
-    #      "Authy restores your entire seed vault to a new device via SMS to the
-    #       number on the account. Google Authenticator has synced to a Google
-    #       account since 2023; Microsoft Authenticator backs up to a Microsoft
-    #       account. In every one of those cases 'the account offers TOTP' is
-    #       true and also irrelevant."
+    #    But I shipped his wording as fact and then went and checked it, which is
+    #    the wrong order, and two thirds of it did not hold:
     #
-    #    It is the same shape the whole tool is built around - your bank's strong
-    #    2FA is worth what the carrier is worth - and I stopped one hop short.
-    #    Conditional and dashed, like the vault edge, because whether somebody's
-    #    codes are actually synced is not visible in a mail header.
+    #      * "Authy does, by default" - FALSE. Twilio turned multi-device OFF by
+    #        default after the 2022 breach. The exposure is real (Authy registers
+    #        a new device against the phone number, which is a documented
+    #        SIM-swap vector) but it is opt-in, and encrypted backups need a
+    #        separate password on top.
+    #      * Google Authenticator and Microsoft Authenticator do NOT key on a
+    #        phone number. They restore from a Google account and a personal
+    #        Microsoft account. So two of the three examples argue for the
+    #        FEDERATED edge he declined to propose, not for this one.
+    #
+    #    So the edge stays, narrowed and honestly worded, and the wording no
+    #    longer implies it is the default or that it covers every app.
     for c in carriers:
         for n in nodes.values():
             if n is c or n.klass != policy.APP:
                 continue
             edges.append(Edge(c.domain, n.domain, AUTHBACKUP,
-                              "IF your authenticator app restores its codes over "
-                              "SMS - Authy does, by default - then holding the "
-                              "phone number holds the codes too"))
+                              "IF your authenticator registers a new device "
+                              "against your phone number - Authy can, though "
+                              "not by default - then the number reaches the "
+                              "codes. Apps that restore from a cloud account "
+                              "instead are not reachable this way"))
 
     # 5. Conditional: a password vault, IF the authenticator codes are in it.
     for v in vaults:

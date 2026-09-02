@@ -113,13 +113,27 @@ which found two real defects (a payslip matching nothing, and a colleague's
 the rules were adjusted *after* seeing those cases, so this is a corpus that has
 been fitted. It is not a claim about your mailbox.
 
-**The carrier also conditionally reaches app-protected accounts, and that is a
-newer, dashed edge.** Authy restores an entire TOTP vault over SMS to the number
-on the account; Google Authenticator syncs to a Google account. So "this service
-offers an authenticator app" can be true and irrelevant. Wren found this and he
-was right that leaving it out is not neutral - it would silently tell an Authy
-user their app-protected accounts survive a SIM swap. Whether your codes are
-actually synced is not visible in a mail header, so the path is conditional.
+**The carrier also conditionally reaches app-protected accounts, and that edge
+is narrower than it first looks.** Some authenticators register a new device
+against your phone number, so a SIM swap can reach the codes themselves and
+"this service offers an authenticator app" becomes true and irrelevant. Wren
+found this class and he was right that leaving it out is not neutral.
+
+But the specific claim needs correcting, and I shipped it before checking, which
+is the wrong order:
+
+- **Authy is exposed but not by default.** Twilio turned multi-device *off* by
+  default after the 2022 breach, and encrypted backups need a separate password
+  on top of the SMS device registration. The vector is real and opt-in, not the
+  standing state of every Authy user.
+- **Google Authenticator and Microsoft Authenticator do not key on a phone
+  number at all.** They restore from a Google account and a personal Microsoft
+  account respectively. A SIM swap does not reach those; a takeover of the cloud
+  account does — which is the *federated* gap below, not this edge.
+
+So this path is dashed, narrowly worded, and rejectable. If your authenticator
+restores from a cloud account rather than a phone number, ignore it here and
+read the federated gap instead.
 
 **A consequence of that: the ordering APP-above-PHONE is a claim about what the
 service offers, not about you.** It stops being true the moment recovery is
