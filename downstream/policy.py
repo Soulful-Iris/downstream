@@ -32,6 +32,21 @@ UNKNOWN = "UNKNOWN"    # not in the directory -> treated as OPEN.
 # How bad, for sorting. Lower is worse.
 SEVERITY = {OPEN: 0, UNKNOWN: 0, THEATRE: 1, PHONE: 2, APP: 3, HARDWARE: 4}
 
+# What the badge SAYS, as opposed to what the constant is called. OPEN, THEATRE
+# and the rest are fine names in code and are words that exist only in this
+# repo - and Bruno spent an evening telling me he did not understand a project
+# because I sent him my vocabulary instead of the thing. He has not complained
+# about these, but they are the first thing the eye lands on in a row, and the
+# fix costs nothing and loses nothing.
+LABEL = {
+    OPEN: "no 2FA",
+    THEATRE: "email code",
+    PHONE: "text code",
+    APP: "app",
+    HARDWARE: "security key",
+    UNKNOWN: "unknown",
+}
+
 EXPLAIN = {
     OPEN: "no second factor exists at all - your inbox is the whole lock",
     THEATRE: "the only second factor offered is an emailed code, which is not a "

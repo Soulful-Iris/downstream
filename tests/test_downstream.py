@@ -293,6 +293,23 @@ def test_the_page_says_offered_not_switched_on():
         "the page must say every time that this is what is OFFERED"
 
 
+def test_the_badges_say_english_not_my_constant_names():
+    """OPEN and THEATRE are fine names in code and nonsense on somebody's screen.
+
+    Bruno: "I dont think i understand the last project you did." The cause was
+    that I kept sending him my vocabulary instead of the thing, and the badge is
+    the first word the eye lands on in a row. The CSS class stays the constant
+    so the colours keep working; only the visible text changed.
+    """
+    _, _, g = _run(synth.PLANTED)
+    out = page.render(g, chain.moves(g), {"messages": 1, "domains": 1})
+    for constant in ("OPEN", "THEATRE", "PHONE", "HARDWARE", "UNKNOWN"):
+        assert f">{constant}<" not in out, \
+            f"{constant} is rendered as visible text; it is a word from my repo"
+    for plain in ("no 2FA", "email code", "text code", "security key"):
+        assert plain in out, f"the plain label {plain!r} is missing"
+
+
 def test_the_page_is_self_contained():
     """A page about not leaking must not fetch anything when it is opened."""
     _, _, g = _run(synth.PLANTED)

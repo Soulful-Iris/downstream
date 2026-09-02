@@ -100,7 +100,8 @@ def _row(n, nodes) -> str:
     else:
         cls += " safe"
     out = [f'<div class="{cls}">',
-           f'<div class=nm><span class="tag {_e(n.klass)}">{_e(n.klass)}</span>'
+           f'<div class=nm><span class="tag {_e(n.klass)}">'
+           f'{_e(policy.LABEL.get(n.klass, n.klass))}</span>'
            f'{_e(n.name)}<span class=dom>{_e(n.domain)}</span></div>',
            f'<div class=d>{_e(policy.EXPLAIN.get(n.klass, ""))}</div>']
     if n.reachable:
