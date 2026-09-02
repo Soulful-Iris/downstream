@@ -1,0 +1,50 @@
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>downstream &mdash; what your email opens</title><style>
+:root{color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0f12;color:#e7e3dc;
+     font:16px/1.55 ui-sans-serif,system-ui,-apple-system,sans-serif;
+     padding:2rem 1.1rem 4rem;display:flex;justify-content:center}
+main{width:100%;max-width:47rem}
+h1{font-size:1.5rem;letter-spacing:-.01em;margin-bottom:.15rem}
+.sub{color:#8b9199;font-size:.85rem;margin-bottom:1.4rem}
+.caveat{border:1px solid #2b3038;border-left:3px solid #6b7178;background:#12151a;
+        border-radius:.4rem;padding:.7rem .85rem;margin-bottom:1.6rem;
+        color:#a8b0b8;font-size:.85rem;line-height:1.5}
+.headline{font-size:1.32rem;line-height:1.4;margin:0 0 .35rem;font-weight:600}
+.headline b{color:#e0b45f}
+.headline.clear b{color:#6fbf8b}
+h2{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:#6b7178;
+   margin:2.2rem 0 .7rem;font-weight:700}
+.row{border:1px solid #23272e;border-radius:.55rem;background:#14171c;
+     padding:.75rem .85rem;margin-bottom:.5rem}
+.row.d1{border-left:3px solid #b4463f}
+.row.d2{border-left:3px solid #c8a24a}
+.row.safe{border-left:3px solid #3a6b4a;background:#111713}
+.row.cond{border-left:3px dashed #5a6b7a}
+.nm{font-weight:600;font-size:1rem}
+.nm .dom{color:#6b7178;font-weight:400;font-size:.8rem;
+         font-family:ui-monospace,monospace;margin-left:.4rem}
+.tag{float:right;font:11px/1.7 ui-monospace,monospace;letter-spacing:.06em;
+     padding:0 .45rem;border-radius:.25rem;background:#24282f;color:#a8b0b8}
+.tag.OPEN,.tag.UNKNOWN{background:#3a1a1a;color:#e8a0a0}
+.tag.THEATRE{background:#3a2a12;color:#e8c98a}
+.tag.PHONE{background:#2a2f3a;color:#a8c0e0}
+.tag.APP,.tag.HARDWARE{background:#16301f;color:#8ed6a8}
+.d{color:#8b9199;font-size:.82rem;margin-top:.2rem}
+.path{margin-top:.5rem;padding-left:.15rem;border-left:1px solid #2a3038}
+.hop{color:#9aa2ab;font-size:.79rem;padding:.12rem 0 .12rem .7rem;position:relative}
+.hop b{color:#cfd6dd;font-weight:600}
+.hop .k{font:10.5px ui-monospace,monospace;letter-spacing:.06em;color:#6b7178;
+        text-transform:uppercase;margin-right:.35rem}
+.move{border:1px solid #2a3a4a;background:#111820;border-radius:.55rem;
+      padding:.8rem .9rem;margin-bottom:.55rem}
+.move .n{font-weight:600}
+.move .n span{float:right;font:11.5px ui-monospace,monospace;color:#7fb0d8}
+.move .a{margin-top:.3rem;font-size:.9rem}
+.move .r{margin-top:.25rem;color:#8b9199;font-size:.81rem}
+.foot{margin-top:2.6rem;padding-top:1rem;border-top:1px solid #1e222a;
+      color:#6b7178;font-size:.78rem;line-height:1.6}
+code{font-family:ui-monospace,monospace;font-size:.85em;color:#c8a24a}
+.big{font-size:2.6rem;font-weight:700;line-height:1;color:#e0b45f}
+.big.clear{color:#6fbf8b}
+</style><body><main><h1>downstream</h1><p class=sub>What your email opens. Generated locally 2026-09-02 08:18 UTC. Nothing on this page left your machine.</p><div class=caveat>This shows what each service <b>offers</b>, not what you have switched on. If a service supports an authenticator app but you never turned it on, it appears here as safe and is not. So this is a map of your best possible defence &mdash; the real one is at best this good, and probably worse.</div><div class="big">5</div><p class="headline"><b>5 of your 6 accounts</b> can be reached from your inbox. <b>4</b> of them in one hop.</p><p class=sub>Read from 162 message headers &mdash; 10 sender domains, 6 of them look like accounts. No message body was opened.</p><h2>the 4 moves &mdash; do these first</h2><p class=sub>These 4 changes disconnect <b>5 of 5</b>. They are ordered by how much each one removes, not by how frightening it is.</p><div class=move><div class=n>1. Vodafone [AU]<span>removes 2</span></div><div class=a>Put a port-out PIN / account PIN on this line, and an authenticator app on the account if one is offered.</div><div class=r>This is the account that turns every SMS code into a formality.</div></div><div class=move><div class=n>2. ADP<span>removes 1</span></div><div class=a>Nothing stronger is offered. Use an address nobody knows for this one, or do not keep anything here you would miss.</div><div class=r>There is no second factor to turn on.</div></div><div class=move><div class=n>3. AliExpress<span>removes 1</span></div><div class=a>Nothing stronger is offered. Use an address nobody knows for this one, or do not keep anything here you would miss.</div><div class=r>There is no second factor to turn on.</div></div><div class=move><div class=n>4. Gumroad<span>removes 1</span></div><div class=a>Nothing stronger is offered. Use an address nobody knows for this one, or do not keep anything here you would miss.</div><div class=r>An emailed code is not a second factor against someone in your email.</div></div><h2>what falls, nearest first</h2><div class="row d1"><div class=nm><span class="tag OPEN">OPEN</span>ADP<span class=dom>adp.com</span></div><div class=d>no second factor exists at all - your inbox is the whole lock</div><div class=path><div class=hop><span class=k>resets</span><b>your email</b> -&gt; <b>ADP</b><br>no second factor exists, so a reset link is the whole lock</div></div></div><div class="row d1"><div class=nm><span class="tag OPEN">OPEN</span>AliExpress<span class=dom>aliexpress.com</span></div><div class=d>no second factor exists at all - your inbox is the whole lock</div><div class=path><div class=hop><span class=k>resets</span><b>your email</b> -&gt; <b>AliExpress</b><br>no second factor exists, so a reset link is the whole lock</div></div></div><div class="row d1"><div class=nm><span class="tag THEATRE">THEATRE</span>Gumroad<span class=dom>gumroad.com</span></div><div class=d>the only second factor offered is an emailed code, which is not a second factor when the attacker is reading the email</div><div class=path><div class=hop><span class=k>resets</span><b>your email</b> -&gt; <b>Gumroad</b><br>the only second factor is an emailed code, and the attacker is reading the email</div></div></div><div class="row d1"><div class=nm><span class="tag OPEN">OPEN</span>Vodafone [AU]<span class=dom>vodafone.com.au</span></div><div class=d>no second factor exists at all - your inbox is the whole lock</div><div class=path><div class=hop><span class=k>resets</span><b>your email</b> -&gt; <b>Vodafone [AU]</b><br>no second factor exists, so a reset link is the whole lock</div></div></div><div class="row d2"><div class=nm><span class="tag PHONE">PHONE</span>Ally Bank<span class=dom>ally.com</span></div><div class=d>SMS or a phone call only - survives a stolen inbox, does not survive a SIM swap</div><div class=path><div class=hop><span class=k>resets</span><b>your email</b> -&gt; <b>Vodafone [AU]</b><br>no second factor exists, so a reset link is the whole lock</div><div class=hop><span class=k>sim swap</span><b>Vodafone [AU]</b> -&gt; <b>Ally Bank</b><br>its second factor is SMS, and whoever holds the carrier account holds the number</div></div></div><h2>already out of reach</h2><div class="row safe"><div class=nm><span class="tag HARDWARE">HARDWARE</span>1Password<span class=dom>1password.com</span></div><div class=d>a security key is available</div></div><div class=foot><b>What this cannot see.</b> Services that have never emailed you. Accounts opened before your mailbox history starts. Whether you actually switched on the second factor a service offers. Anything whose mail is in a language other than English. And an account you signed up for with a different address.<br><br>Second-factor data from <code>2fa.directory</code>, MIT licensed, fetched once and cached. It is never asked anything about you.<br><br>Run <code>downstream --forget</code> to delete everything this tool has written about you.</div></main></body></html>

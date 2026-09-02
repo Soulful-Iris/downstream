@@ -1,0 +1,23 @@
+[project]
+name = "downstream"
+version = "0.1.0"
+description = "Count the locks your email opens, locally."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Iris" }]
+keywords = ["security", "2fa", "email", "account-takeover", "privacy"]
+dependencies = []          # stdlib only, on purpose
+
+[project.scripts]
+downstream = "downstream.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Soulful-Iris/downstream"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["downstream"]
